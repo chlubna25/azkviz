@@ -1,0 +1,43 @@
+export const LETTERS = [
+  'A', 'B', 'C', 'Č', 'D', 'E', 'F', 'G', 'H', 'CH', 'I', 'J', 'K', 'L',
+  'M', 'N', 'O', 'P', 'R', 'Ř', 'S', 'Š', 'T', 'U', 'V', 'Y', 'Z', 'Ž'
+];
+
+export const sampleQuestions = [
+  ['A', 'Jaké je hlavní město České republiky?', 'Praha', 'Leží Praha na řece Vltavě?', 'ANO'],
+  ['B', 'Která planeta je nejblíže Slunci?', 'Merkur', 'Je Merkur větší než Země?', 'NE'],
+  ['C', 'Kolik stran má pravidelný šestiúhelník?', '6', 'Má krychle šest stěn?', 'ANO'],
+  ['Č', 'Kdo napsal drama R.U.R.?', 'Karel Čapek', 'Vymyslel Karel Čapek slovo robot?', 'NE'],
+  ['D', 'Jak se nazývá nejdelší řeka světa podle tradičního školního údaje?', 'Nil', 'Protéká Nil Egyptem?', 'ANO'],
+  ['E', 'Jaký chemický symbol má zlato?', 'Au', 'Je zlato za běžných podmínek plyn?', 'NE'],
+  ['F', 'Kolik je 12 × 8?', '96', 'Je 96 dělitelné třemi?', 'ANO'],
+  ['G', 'Který oceán je největší?', 'Tichý oceán', 'Je Atlantský oceán větší než Tichý?', 'NE'],
+  ['H', 'Jak se jmenuje nejvyšší hora Česka?', 'Sněžka', 'Měří Sněžka více než 2 000 metrů?', 'NE'],
+  ['CH', 'Který plyn rostliny přijímají při fotosyntéze?', 'Oxid uhličitý', 'Uvolňují rostliny při fotosyntéze kyslík?', 'ANO'],
+  ['I', 'Jak se nazývá největší orgán lidského těla?', 'Kůže', 'Je srdce největším orgánem lidského těla?', 'NE'],
+  ['J', 'Kolik hráčů jednoho týmu je běžně na hřišti ve fotbale?', '11', 'Hraje se fotbal standardně s kulatým míčem?', 'ANO'],
+  ['K', 'Který kontinent je rozlohou nejmenší?', 'Austrálie', 'Je Austrálie zároveň státem?', 'ANO'],
+  ['L', 'Jak se jmenuje autor románu 1984?', 'George Orwell', 'Byl George Orwell rodným jménem Eric Arthur Blair?', 'ANO'],
+  ['M', 'Kolik minut má jedna hodina?', '60', 'Má jeden den 1 440 minut?', 'ANO'],
+  ['N', 'Jaký je největší savec na Zemi?', 'Plejtvák obrovský', 'Žije plejtvák obrovský pouze ve sladké vodě?', 'NE'],
+  ['O', 'Jak se nazývá proces změny kapaliny na plyn?', 'Vypařování', 'Může se voda vypařovat i pod bodem varu?', 'ANO'],
+  ['P', 'Kdo namaloval Monu Lisu?', 'Leonardo da Vinci', 'Je Mona Lisa vystavena v Louvru?', 'ANO'],
+  ['R', 'Kolik je druhá odmocnina ze 144?', '12', 'Je 144 prvočíslo?', 'NE'],
+  ['Ř', 'Jak se nazývá česká měna?', 'Koruna česká', 'Je česká koruna rozdělena na 100 haléřů, přestože haléřové mince už neobíhají?', 'ANO'],
+  ['S', 'Který kov je za běžné pokojové teploty kapalný?', 'Rtuť', 'Je chemická značka rtuti Hg?', 'ANO'],
+  ['Š', 'Jak se jmenuje největší poušť světa, počítáme-li i polární pouště?', 'Antarktida', 'Je Sahara největší horká poušť světa?', 'ANO'],
+  ['T', 'Kolik je v běžném roce dní?', '365', 'Má každý čtvrtý kalendářní rok automaticky 366 dní?', 'NE'],
+  ['U', 'Jaký jazyk se používá pro strukturu webových stránek?', 'HTML', 'Je CSS programovací jazyk určený primárně ke stylování webu?', 'NE'],
+  ['V', 'Jak se jmenuje největší česká vodní nádrž podle rozlohy?', 'Lipno', 'Leží Lipno na Vltavě?', 'ANO'],
+  ['Y', 'Jaké číslo označuje římská číslice X?', '10', 'Označuje římská číslice L číslo 50?', 'ANO'],
+  ['Z', 'Kolik barev má tradičně duha?', '7', 'Patří černá mezi spektrální barvy duhy?', 'NE'],
+  ['Ž', 'Jak se nazývá základní jednotka elektrického proudu?', 'Ampér', 'Je volt jednotkou elektrického proudu?', 'NE']
+].map(([label, question, answer, yesNoQuestion, yesNoAnswer], index) => ({
+  id: index + 1,
+  label,
+  question,
+  answer,
+  yesNoQuestion,
+  yesNoAnswer,
+  status: 'open'
+}));

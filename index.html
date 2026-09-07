@@ -7,981 +7,1431 @@
   <title>AZ kvíz - čichna</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤓</text></svg>">
   <style>
-:root {
-  color-scheme: dark;
-  --background: #07111f;
-  --surface: #101b2e;
-  --surface-2: #17243a;
-  --border: rgba(255, 255, 255, 0.12);
-  --text: #f4f7fb;
-  --muted: #9ba9bc;
-  --blue: #1877d2;
-  --orange: #ef7a19;
-  --black: #16191f;
-  --white: #e9eef5;
-  --open: #e9eef5;
-  --open-text: #101827;
-  --danger: #b73c45;
-  --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
+    :root {
+      color-scheme: dark;
+      --background: #07111f;
+      --surface: #101b2e;
+      --surface-2: #17243a;
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #f4f7fb;
+      --muted: #9ba9bc;
+      --blue: #1877d2;
+      --orange: #ef7a19;
+      --black: #16191f;
+      --white: #e9eef5;
+      --open: #e9eef5;
+      --open-text: #101827;
+      --danger: #b73c45;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
-* { box-sizing: border-box; }
+    * { box-sizing: border-box; }
 
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  background:
-    radial-gradient(circle at 15% 0%, rgba(24, 119, 210, 0.16), transparent 32rem),
-    radial-gradient(circle at 90% 10%, rgba(239, 122, 25, 0.12), transparent 30rem),
-    var(--background);
-  color: var(--text);
-}
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      background:
+              radial-gradient(circle at 15% 0%, rgba(24, 119, 210, 0.16), transparent 32rem),
+              radial-gradient(circle at 90% 10%, rgba(239, 122, 25, 0.12), transparent 30rem),
+              var(--background);
+      color: var(--text);
+    }
 
-button, input, textarea { font: inherit; }
-button { cursor: pointer; }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
 
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding: 1.3rem clamp(1rem, 4vw, 3.5rem);
-  border-bottom: 1px solid var(--border);
-  background: rgba(7, 17, 31, 0.78);
-  backdrop-filter: blur(16px);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 1.3rem clamp(1rem, 4vw, 3.5rem);
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 17, 31, 0.78);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-h1, h2, p { margin-top: 0; }
-h1 { margin-bottom: 0; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -0.04em; }
-h2 { margin-bottom: 0.65rem; font-size: 1.12rem; }
+    h1, h2, p { margin-top: 0; }
+    h1 { margin-bottom: 0; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -0.04em; }
+    h2 { margin-bottom: 0.65rem; font-size: 1.12rem; }
 
-.eyebrow {
-  margin-bottom: 0.2rem;
-  color: #79b8f2;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
+    .eyebrow {
+      margin-bottom: 0.2rem;
+      color: #79b8f2;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
 
-.header-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: flex-end; }
+    .header-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: flex-end; }
 
-.layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(250px, 330px);
-  gap: 1.25rem;
-  padding: 1.25rem clamp(1rem, 4vw, 3.5rem) 3rem;
-  max-width: 1500px;
-  margin: 0 auto;
-}
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(250px, 330px);
+      gap: 1.25rem;
+      padding: 1.25rem clamp(1rem, 4vw, 3.5rem) 3rem;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
 
-.game-panel, .card {
-  background: linear-gradient(145deg, rgba(23, 36, 58, 0.95), rgba(12, 24, 42, 0.96));
-  border: 1px solid var(--border);
-  border-radius: 1.25rem;
-  box-shadow: var(--shadow);
-}
+    .game-panel, .card {
+      background: linear-gradient(145deg, rgba(23, 36, 58, 0.95), rgba(12, 24, 42, 0.96));
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      box-shadow: var(--shadow);
+    }
 
-.game-panel { padding: clamp(1rem, 2.5vw, 2rem); min-height: 74vh; overflow: auto; }
-.panel-heading { display: flex; justify-content: space-between; align-items: start; gap: 1rem; }
-.muted { color: var(--muted); }
-.legend { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.55rem 0.9rem; color: var(--muted); font-size: 0.82rem; }
-.legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
-.legend-dot { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 50%; }
-.legend-dot.blue { background: var(--blue); }
-.legend-dot.orange { background: var(--orange); }
-.legend-dot.black { background: var(--black); border: 1px solid rgba(255,255,255,.45); }
-.legend-dot.white { background: var(--open); border: 1px solid rgba(16,24,39,.25); }
+    .game-panel { padding: clamp(1rem, 2.5vw, 2rem); min-height: 74vh; overflow: auto; }
+    .panel-heading { display: flex; justify-content: space-between; align-items: start; gap: 1rem; }
+    .muted { color: var(--muted); }
+    .legend { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.55rem 0.9rem; color: var(--muted); font-size: 0.82rem; }
+    .legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+    .legend-dot { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 50%; }
+    .legend-dot.blue { background: var(--blue); }
+    .legend-dot.orange { background: var(--orange); }
+    .legend-dot.black { background: var(--black); border: 1px solid rgba(255,255,255,.45); }
+    .legend-dot.white { background: var(--open); border: 1px solid rgba(16,24,39,.25); }
 
-.board {
-  /* Šestiúhelník s vrcholem nahoře a dole. Poměr odpovídá pravidelnému hexagonu. */
-  --tile-width: clamp(85px, 6.6vw, 78px);
-  --tile-height: calc(var(--tile-width) * 1.1547);
-  /* Stejná skutečná mezera mezi vodorovnými i šikmými hranami. */
-  --horizontal-gap: 16px;
-  --vertical-gap: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  /* U pointy-top hexagonu je dotyk řad po 3/4 výšky.
-     Přičtení 0.866 × mezera zachová stejnou kolmou vzdálenost i na šikmých hranách. */
-  gap: calc(
-          var(--tile-height) * -0.25
-          + var(--vertical-gap) * 0.8660254
-  );
-  min-width: calc(var(--tile-width) * 7 + var(--tile-gap) * 6);
-  min-height: calc(var(--tile-height) * 6.25 + var(--tile-gap) * 5.2);
-  padding: 1rem 0 .5rem;
-}
+    .board {
+      /* Šestiúhelník s vrcholem nahoře a dole. Poměr odpovídá pravidelnému hexagonu. */
+      --tile-width: clamp(85px, 6.6vw, 78px);
+      --tile-height: calc(var(--tile-width) * 1.1547);
+      /* Stejná skutečná mezera mezi vodorovnými i šikmými hranami. */
+      --horizontal-gap: 16px;
+      --vertical-gap: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      /* U pointy-top hexagonu je dotyk řad po 3/4 výšky.
+         Přičtení 0.866 × mezera zachová stejnou kolmou vzdálenost i na šikmých hranách. */
+      gap: calc(
+              var(--tile-height) * -0.25
+              + var(--vertical-gap) * 0.8660254
+      );
+      min-width: calc(var(--tile-width) * 7 + var(--horizontal-gap) * 6);
+      min-height: calc(var(--tile-height) * 6.25 + var(--vertical-gap) * 5.2);
+      padding: 1rem 0 .5rem;
+    }
 
-.board-row { display: flex; justify-content: center; gap: var(--horizontal-gap); }
+    .board-row { display: flex; justify-content: center; gap: var(--horizontal-gap); }
 
-.hex-tile {
-  width: var(--tile-width);
-  height: var(--tile-height);
-  padding: 0;
-  border: 0;
-  background: transparent;
+    .hex-tile {
+      width: var(--tile-width);
+      height: var(--tile-height);
+      padding: 0;
+      border: 0;
+      background: transparent;
 
-  clip-path: polygon(
-          50% 0,
-          100% 25%,
-          100% 75%,
-          50% 100%,
-          0 75%,
-          0 25%
-  );
+      clip-path: polygon(
+              50% 0,
+              100% 25%,
+              100% 75%,
+              50% 100%,
+              0 75%,
+              0 25%
+      );
 
-  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.3));
-  transition: transform 120ms ease, filter 120ms ease;
-}
+      filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.3));
+      transition: transform 120ms ease, filter 120ms ease;
+    }
 
-.hex-inner {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
+    .hex-inner {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
 
-  /* clip-path už zajišťuje rodič .hex-tile */
-  clip-path: none;
-  border: 0;
+      /* clip-path už zajišťuje rodič .hex-tile */
+      clip-path: none;
+      border: 0;
 
-  background: var(--open);
-  color: var(--open-text);
+      background: var(--open);
+      color: var(--open-text);
 
-  transition: background 160ms ease, color 160ms ease;
-}
+      transition: background 160ms ease, color 160ms ease;
+    }
 
-.hex-tile[data-status="blue"] .hex-inner {
-  background: var(--blue);
-  color: white;
-}
+    .hex-tile[data-status="blue"] .hex-inner {
+      background: var(--blue);
+      color: white;
+    }
 
-.hex-tile[data-status="orange"] .hex-inner {
-  background: var(--orange);
-  color: white;
-}
+    .hex-tile[data-status="orange"] .hex-inner {
+      background: var(--orange);
+      color: white;
+    }
 
-.hex-tile[data-status="black"] .hex-inner {
-  background: var(--black);
-  color: white;
+    .hex-tile[data-status="black"] .hex-inner {
+      background: var(--black);
+      color: white;
 
-  /* inset shadow zde deformoval vzhled šestiúhelníku */
-  box-shadow: none;
-}
+      /* inset shadow zde deformoval vzhled šestiúhelníku */
+      box-shadow: none;
+    }
 
-.hex-tile[data-status="black"] .tile-label::after {
-  content: "?";
-  display: block;
-  margin-top: 2px;
-  font-size: .48em;
-  line-height: .7;
-  opacity: .7;
-}
-.tile-label { font-weight: 900; font-size: clamp(1rem, 2.1vw, 1.55rem); text-shadow: 0 1px 0 rgba(255,255,255,.3); }
-.info-panel { display: flex; flex-direction: column; gap: 1rem; }
-.card { padding: 1.15rem; }
-.card code { display: block; padding: .75rem; margin: .7rem 0; overflow-wrap: anywhere; border-radius: .65rem; background: rgba(0,0,0,.24); color: #d8e9fa; }
-.compact-list { margin: 0; padding-left: 1.2rem; color: var(--muted); }
-.compact-list li + li { margin-top: .48rem; }
+    .hex-tile[data-status="black"] .tile-label::after {
+      content: "?";
+      display: block;
+      margin-top: 2px;
+      font-size: .48em;
+      line-height: .7;
+      opacity: .7;
+    }
+    .tile-label { font-weight: 900; font-size: clamp(1rem, 2.1vw, 1.55rem); text-shadow: 0 1px 0 rgba(255,255,255,.3); }
+    .info-panel { display: flex; flex-direction: column; gap: 1rem; }
+    .card { padding: 1.15rem; }
+    .card code { display: block; padding: .75rem; margin: .7rem 0; overflow-wrap: anywhere; border-radius: .65rem; background: rgba(0,0,0,.24); color: #d8e9fa; }
+    .compact-list { margin: 0; padding-left: 1.2rem; color: var(--muted); }
+    .compact-list li + li { margin-top: .48rem; }
 
-.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6rem; }
-.stats-grid div { padding: .75rem; background: rgba(255,255,255,.045); border-radius: .8rem; }
-.stats-grid strong { display: block; font-size: 1.45rem; }
-.stats-grid span { color: var(--muted); font-size: .78rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6rem; }
+    .stats-grid div { padding: .75rem; background: rgba(255,255,255,.045); border-radius: .8rem; }
+    .stats-grid strong { display: block; font-size: 1.45rem; }
+    .stats-grid span { color: var(--muted); font-size: .78rem; }
 
-.button {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 2.65rem;
-  padding: .65rem 1rem;
-  border: 1px solid transparent;
-  border-radius: .7rem;
-  color: white;
-  font-weight: 750;
-  text-decoration: none;
-  transition: transform 120ms ease, opacity 120ms ease, border-color 120ms ease;
-}
-.button:hover { transform: translateY(-1px); }
-.button:disabled { cursor: not-allowed; opacity: .45; transform: none; }
-.button-primary { background: var(--blue); }
-.button-secondary { background: rgba(255,255,255,.07); border-color: var(--border); }
-.button-danger { background: rgba(183, 60, 69, .18); border-color: rgba(255, 109, 119, .35); color: #ffb9be; }
-.button-block { width: 100%; }
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 2.65rem;
+      padding: .65rem 1rem;
+      border: 1px solid transparent;
+      border-radius: .7rem;
+      color: white;
+      font-weight: 750;
+      text-decoration: none;
+      transition: transform 120ms ease, opacity 120ms ease, border-color 120ms ease;
+    }
+    .button:hover { transform: translateY(-1px); }
+    .button:disabled { cursor: not-allowed; opacity: .45; transform: none; }
+    .button-primary { background: var(--blue); }
+    .button-secondary { background: rgba(255,255,255,.07); border-color: var(--border); }
+    .button-danger { background: rgba(183, 60, 69, .18); border-color: rgba(255, 109, 119, .35); color: #ffb9be; }
+    .button-block { width: 100%; }
 
-.dialog {
-  width: min(680px, calc(100vw - 2rem));
-  max-height: calc(100vh - 2rem);
-  padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 1.2rem;
-  color: var(--text);
-  background: var(--surface);
-  box-shadow: 0 30px 90px rgba(0,0,0,.6);
-}
-.dialog::backdrop { background: rgba(1, 6, 13, .76); backdrop-filter: blur(7px); }
-.dialog-shell { margin: 0; }
-.dialog-header { display: flex; justify-content: space-between; align-items: start; gap: 1rem; padding: 1.2rem 1.25rem .9rem; border-bottom: 1px solid var(--border); }
-.dialog-header h2 { margin: 0; font-size: 1.45rem; }
-.dialog-content { padding: 1.25rem; }
-.icon-button { width: 2.4rem; height: 2.4rem; border: 0; border-radius: 50%; color: white; background: rgba(255,255,255,.08); font-size: 1.45rem; }
-.question-text { min-height: 4rem; margin: .4rem 0 .85rem; font-size: clamp(1.25rem, 3vw, 1.75rem); line-height: 1.35; font-weight: 730; }
-.timer-box { margin: 0 0 1.2rem; padding: .75rem .9rem; border: 1px solid var(--border); border-radius: .8rem; background: rgba(255,255,255,.045); }
-.timer-top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .55rem; }
-.timer-label { color: var(--muted); font-size: .82rem; font-weight: 750; }
-.timer-value { font-size: 1.45rem; font-weight: 900; font-variant-numeric: tabular-nums; }
-.timer-track { height: .5rem; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.10); }
-.timer-progress { width: 100%; height: 100%; border-radius: inherit; background: var(--blue); transform-origin: left center; transition: width 1s linear; }
-.timer-box.expired { border-color: rgba(255, 109, 119, .42); }
-.timer-box.expired .timer-value { color: #ffadb4; }
-.timer-box.expired .timer-progress { background: var(--danger); }
-.answer-box { padding: 1rem; margin-bottom: 1rem; border: 1px solid rgba(113, 190, 255, .34); border-radius: .85rem; background: rgba(24, 119, 210, .12); }
-.answer-box span { display: block; margin-bottom: .3rem; color: #91c9f8; font-size: .76rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
-.answer-box strong { font-size: 1.2rem; }
-.color-chooser { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
-.color-chooser p { color: var(--muted); }
-.color-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; }
-.color-button { min-height: 3.2rem; border: 1px solid rgba(255,255,255,.18); border-radius: .8rem; color: white; font-weight: 850; }
-.color-button.blue { background: var(--blue); }
-.color-button.orange { background: var(--orange); }
-.color-button.black { background: var(--black); }
-.color-button.white { background: var(--open); color: var(--open-text); }
-.yes-no-controls { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-bottom: 1rem; }
-.yes-no-button { min-height: 4rem; border: 1px solid var(--border); border-radius: .8rem; background: rgba(255,255,255,.07); color: white; font-size: 1.25rem; font-weight: 900; }
-.yes-no-button.selected { border-color: #fff; background: rgba(255,255,255,.17); }
-.answer-result { padding: .7rem .9rem; border-radius: .7rem; font-weight: 800; }
-.answer-result.correct { background: rgba(44, 174, 105, .18); color: #8df0b7; }
-.answer-result.incorrect { background: rgba(214, 70, 82, .18); color: #ffadb4; }
-.hidden { display: none !important; }
+    .dialog {
+      width: min(680px, calc(100vw - 2rem));
+      max-height: calc(100vh - 2rem);
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: 1.2rem;
+      color: var(--text);
+      background: var(--surface);
+      box-shadow: 0 30px 90px rgba(0,0,0,.6);
+    }
+    .dialog::backdrop { background: rgba(1, 6, 13, .76); backdrop-filter: blur(7px); }
+    .dialog-shell { margin: 0; }
+    .dialog-header { display: flex; justify-content: space-between; align-items: start; gap: 1rem; padding: 1.2rem 1.25rem .9rem; border-bottom: 1px solid var(--border); }
+    .dialog-header h2 { margin: 0; font-size: 1.45rem; }
+    .dialog-content { padding: 1.25rem; }
+    .icon-button { width: 2.4rem; height: 2.4rem; border: 0; border-radius: 50%; color: white; background: rgba(255,255,255,.08); font-size: 1.45rem; }
+    .question-text { min-height: 4rem; margin: .4rem 0 .85rem; font-size: clamp(1.25rem, 3vw, 1.75rem); line-height: 1.35; font-weight: 730; }
+    .timer-box { margin: 0 0 1.2rem; padding: .75rem .9rem; border: 1px solid var(--border); border-radius: .8rem; background: rgba(255,255,255,.045); }
+    .timer-top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .55rem; }
+    .timer-label { color: var(--muted); font-size: .82rem; font-weight: 750; }
+    .timer-value { font-size: 1.45rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+    .timer-track { height: .5rem; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.10); }
+    .timer-progress { width: 100%; height: 100%; border-radius: inherit; background: var(--blue); transform-origin: left center; transition: width 1s linear; }
+    .timer-box.expired { border-color: rgba(255, 109, 119, .42); }
+    .timer-box.expired .timer-value { color: #ffadb4; }
+    .timer-box.expired .timer-progress { background: var(--danger); }
+    .answer-box { padding: 1rem; margin-bottom: 1rem; border: 1px solid rgba(113, 190, 255, .34); border-radius: .85rem; background: rgba(24, 119, 210, .12); }
+    .answer-box span { display: block; margin-bottom: .3rem; color: #91c9f8; font-size: .76rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .answer-box strong { font-size: 1.2rem; }
+    .color-chooser { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .color-chooser p { color: var(--muted); }
+    .color-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; }
+    .color-button { min-height: 3.2rem; border: 1px solid rgba(255,255,255,.18); border-radius: .8rem; color: white; font-weight: 850; }
+    .color-button.blue { background: var(--blue); }
+    .color-button.orange { background: var(--orange); }
+    .color-button.black { background: var(--black); }
+    .color-button.white { background: var(--open); color: var(--open-text); }
+    .yes-no-controls { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-bottom: 1rem; }
+    .yes-no-button { min-height: 4rem; border: 1px solid var(--border); border-radius: .8rem; background: rgba(255,255,255,.07); color: white; font-size: 1.25rem; font-weight: 900; }
+    .yes-no-button.selected { border-color: #fff; background: rgba(255,255,255,.17); }
+    .answer-result { padding: .7rem .9rem; border-radius: .7rem; font-weight: 800; }
+    .answer-result.correct { background: rgba(44, 174, 105, .18); color: #8df0b7; }
+    .answer-result.incorrect { background: rgba(214, 70, 82, .18); color: #ffadb4; }
+    .hidden { display: none !important; }
 
-.file-picker { display: grid; place-items: center; min-height: 5rem; padding: 1rem; border: 1px dashed rgba(255,255,255,.28); border-radius: .9rem; background: rgba(255,255,255,.035); font-weight: 750; cursor: pointer; }
-.file-picker input { margin-top: .55rem; max-width: 100%; }
-.separator { display: flex; align-items: center; gap: .8rem; margin: 1rem 0; color: var(--muted); font-size: .8rem; }
-.separator::before, .separator::after { content: ""; height: 1px; flex: 1; background: var(--border); }
-.field-label { display: block; margin-bottom: .45rem; font-weight: 800; }
-textarea { width: 100%; resize: vertical; padding: .85rem; border: 1px solid var(--border); border-radius: .75rem; background: #091422; color: var(--text); line-height: 1.45; }
-textarea:focus { outline: 3px solid rgba(24,119,210,.32); border-color: #58a9ec; }
-.dialog-actions { display: flex; justify-content: flex-end; gap: .65rem; margin-top: 1rem; }
-.form-message.error { color: #ff9ba4; }
-.form-message.success { color: #8df0b7; }
+    .file-picker { display: grid; place-items: center; min-height: 5rem; padding: 1rem; border: 1px dashed rgba(255,255,255,.28); border-radius: .9rem; background: rgba(255,255,255,.035); font-weight: 750; cursor: pointer; }
+    .file-picker input { margin-top: .55rem; max-width: 100%; }
+    .separator { display: flex; align-items: center; gap: .8rem; margin: 1rem 0; color: var(--muted); font-size: .8rem; }
+    .separator::before, .separator::after { content: ""; height: 1px; flex: 1; background: var(--border); }
+    .field-label { display: block; margin-bottom: .45rem; font-weight: 800; }
+    textarea { width: 100%; resize: vertical; padding: .85rem; border: 1px solid var(--border); border-radius: .75rem; background: #091422; color: var(--text); line-height: 1.45; }
+    textarea:focus { outline: 3px solid rgba(24,119,210,.32); border-color: #58a9ec; }
+    .dialog-actions { display: flex; justify-content: flex-end; gap: .65rem; margin-top: 1rem; }
+    .form-message.error { color: #ff9ba4; }
+    .form-message.success { color: #8df0b7; }
 
-@media (max-width: 980px) {
-  .layout { grid-template-columns: 1fr; }
-  .info-panel { display: grid; grid-template-columns: repeat(3, 1fr); }
-  .game-panel { min-height: auto; }
-  .board { min-height: 500px; }
-}
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .info-panel { display: grid; grid-template-columns: repeat(3, 1fr); }
+      .game-panel { min-height: auto; }
+      .board { min-height: 500px; }
+    }
 
-@media (max-width: 700px) {
-  .app-header { align-items: flex-start; flex-direction: column; position: static; }
-  .header-actions { width: 100%; }
-  .header-actions .button { flex: 1; }
-  .panel-heading { flex-direction: column; }
-  .legend { justify-content: flex-start; }
-  .info-panel { grid-template-columns: 1fr; }
-  .board { --tile-width: 50px; --tile-gap: 4px; min-width: calc(50px * 7 + 4px * 6); min-height: 400px; }
-  .game-panel { padding: .8rem; }
-}
+    @media (max-width: 700px) {
+      .app-header { align-items: flex-start; flex-direction: column; position: static; }
+      .header-actions { width: 100%; }
+      .header-actions .button { flex: 1; }
+      .panel-heading { flex-direction: column; }
+      .legend { justify-content: flex-start; }
+      .info-panel { grid-template-columns: 1fr; }
+      .board { --tile-width: 50px; --tile-gap: 4px; min-width: calc(50px * 7 + 4px * 6); min-height: 400px; }
+      .game-panel { padding: .8rem; }
+    }
 
 
-.dialog:not([open]) { display: none; }
-.dialog-fallback-open { position: fixed; inset: 50% auto auto 50%; transform: translate(-50%, -50%); z-index: 1000; }
+    .dialog:not([open]) { display: none; }
+    .dialog-fallback-open { position: fixed; inset: 50% auto auto 50%; transform: translate(-50%, -50%); z-index: 1000; }
 
-.app-footer {
-  max-width: 1500px;
-  margin: -1.5rem auto 0;
-  padding: 0 clamp(1rem, 4vw, 3.5rem) 2rem;
-  color: var(--muted);
-  font-size: .8rem;
-  text-align: center;
-}
-.app-footer p { margin: 0; }
-</style>
+    /* --- Výhra --- */
+    .hex-tile.winning-tile {
+      position: relative;
+      z-index: 2;
+      animation: winningTileReveal .58s cubic-bezier(.2,.8,.2,1) var(--win-delay, 0ms) both;
+    }
+
+    .hex-tile.winning-tile .hex-inner {
+      filter: brightness(1.16) saturate(1.15);
+    }
+
+    @keyframes winningTileReveal {
+      0% {
+        transform: scale(.82);
+        filter: drop-shadow(0 0 0 rgba(255,255,255,0));
+      }
+      60% {
+        transform: scale(1.09);
+        filter: drop-shadow(0 0 16px rgba(255,255,255,.95));
+      }
+      100% {
+        transform: scale(1.04);
+        filter: drop-shadow(0 0 10px rgba(255,255,255,.72));
+      }
+    }
+
+    .victory-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1100;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(1, 6, 13, .78);
+      backdrop-filter: blur(10px);
+    }
+
+    .victory-overlay.hidden {
+      display: none;
+    }
+
+    .victory-card {
+      width: min(520px, calc(100vw - 2rem));
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 1.35rem;
+      background: linear-gradient(145deg, rgba(23,36,58,.98), rgba(8,18,32,.98));
+      box-shadow: 0 32px 100px rgba(0,0,0,.62);
+      text-align: center;
+      animation: victoryCardIn .42s cubic-bezier(.18,.9,.3,1.2) both;
+    }
+
+    .victory-trophy {
+      margin-bottom: .65rem;
+      font-size: 4rem;
+      line-height: 1;
+      animation: trophyBounce .9s ease-in-out infinite alternate;
+    }
+
+    .victory-kicker {
+      margin-bottom: .35rem;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 850;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .victory-title {
+      margin: 0;
+      font-size: clamp(2rem, 7vw, 3.35rem);
+      line-height: 1;
+      letter-spacing: -.045em;
+    }
+
+    .victory-overlay[data-winner="blue"] .victory-title {
+      color: #65b5ff;
+    }
+
+    .victory-overlay[data-winner="orange"] .victory-title {
+      color: #ffad65;
+    }
+
+    .victory-subtitle {
+      margin: .9rem 0 1.4rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .victory-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .7rem;
+    }
+
+    .victory-overlay[data-winner="orange"] .victory-new-game {
+      background: var(--orange);
+    }
+
+    @keyframes victoryCardIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(.94);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes trophyBounce {
+      from { transform: translateY(0) rotate(-3deg); }
+      to   { transform: translateY(-7px) rotate(3deg); }
+    }
+
+    .confetti-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      top: -24px;
+      left: var(--x);
+      width: var(--w);
+      height: var(--h);
+      border-radius: 2px;
+      background: var(--confetti-color);
+      opacity: .95;
+      transform: rotate(var(--rotation));
+      animation: confettiFall var(--duration) cubic-bezier(.2,.65,.35,1) var(--delay) forwards;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translate3d(0, -30px, 0) rotate(var(--rotation));
+      }
+      100% {
+        transform: translate3d(var(--drift), 110vh, 0) rotate(calc(var(--rotation) + 720deg));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hex-tile.winning-tile,
+      .victory-card,
+      .victory-trophy,
+      .confetti-piece {
+        animation: none !important;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .victory-card { padding: 1.4rem; }
+      .victory-actions { grid-template-columns: 1fr; }
+    }
+
+    .app-footer {
+      max-width: 1500px;
+      margin: -1.5rem auto 0;
+      padding: 0 clamp(1rem, 4vw, 3.5rem) 2rem;
+      color: var(--muted);
+      font-size: .8rem;
+      text-align: center;
+    }
+    .app-footer p { margin: 0; }
+  </style>
 </head>
 <body>
-  <header class="app-header">
-    <div>
-      <h1>AZ kvíz</h1>
-    </div>
-    <div class="header-actions">
-      <button id="undoButton" class="button button-secondary" type="button" disabled>Zpět</button>
-      <button id="resetBoardButton" class="button button-danger" type="button">Vynulovat barvy</button>
-      <button id="openImportButton" class="button button-primary" type="button">Nahrát CSV</button>
-    </div>
-  </header>
+<header class="app-header">
+  <div>
+    <h1>AZ kvíz</h1>
+  </div>
+  <div class="header-actions">
+    <button id="undoButton" class="button button-secondary" type="button" disabled>Zpět</button>
+    <button id="resetBoardButton" class="button button-danger" type="button">Vynulovat barvy</button>
+    <button id="openImportButton" class="button button-primary" type="button">Nahrát CSV</button>
+  </div>
+</header>
 
-  <main class="layout">
-    <section class="game-panel" aria-labelledby="boardTitle">
-      <div class="panel-heading">
-        <div>
-          <h2 id="boardTitle">Herní plocha</h2>
-          <p id="boardStatus" class="muted">Kliknutím na pole otevřete otázku.</p>
-        </div>
-        <div class="legend" aria-label="Legenda barev">
-          <span><i class="legend-dot blue"></i> Modrá</span>
-          <span><i class="legend-dot orange"></i> Oranžová</span>
-          <span><i class="legend-dot black"></i> Černá – ANO/NE</span>
-        </div>
+<main class="layout">
+  <section class="game-panel" aria-labelledby="boardTitle">
+    <div class="panel-heading">
+      <div>
+        <h2 id="boardTitle">Herní plocha</h2>
+        <p id="boardStatus" class="muted">Kliknutím na pole otevřete otázku.</p>
       </div>
+      <div class="legend" aria-label="Legenda barev">
+        <span><i class="legend-dot blue"></i> Modrá</span>
+        <span><i class="legend-dot orange"></i> Oranžová</span>
+        <span><i class="legend-dot black"></i> Černá – ANO/NE</span>
+      </div>
+    </div>
 
-      <div id="board" class="board" aria-label="Herní pole AZ kvízu"></div>
+    <div id="board" class="board" aria-label="Herní pole AZ kvízu"></div>
+  </section>
+
+  <aside class="info-panel">
+    <section class="card">
+      <h2>Ovládání</h2>
+      <ol class="compact-list">
+        <li>Klikněte na pole a přečtěte otázku.</li>
+        <li>Zobrazte správnou odpověď.</li>
+        <li>Vyberte barvu pole.</li>
+        <li>Černé pole lze znovu otevřít jako otázku ANO/NE.</li>
+      </ol>
     </section>
 
-    <aside class="info-panel">
-      <section class="card">
-        <h2>Ovládání</h2>
-        <ol class="compact-list">
-          <li>Klikněte na pole a přečtěte otázku.</li>
-          <li>Zobrazte správnou odpověď.</li>
-          <li>Vyberte barvu pole.</li>
-          <li>Černé pole lze znovu otevřít jako otázku ANO/NE.</li>
-        </ol>
-      </section>
+    <section class="card stats-card">
+      <h2>Stav hry</h2>
+      <div class="stats-grid">
+        <div><strong id="blueCount">0</strong><span>modrých</span></div>
+        <div><strong id="orangeCount">0</strong><span>oranžových</span></div>
+        <div><strong id="blackCount">0</strong><span>černých</span></div>
+        <div><strong id="openCount">0</strong><span>neobsazeno</span></div>
+      </div>
+    </section>
 
-      <section class="card stats-card">
-        <h2>Stav hry</h2>
-        <div class="stats-grid">
-          <div><strong id="blueCount">0</strong><span>modrých</span></div>
-          <div><strong id="orangeCount">0</strong><span>oranžových</span></div>
-          <div><strong id="blackCount">0</strong><span>černých</span></div>
-          <div><strong id="openCount">0</strong><span>neobsazeno</span></div>
+  </aside>
+</main>
+
+<footer class="app-footer">
+  <p>ondrej.chlubna@cichnovabrno.cz || K vývoji aplikace a přípravě ukázkových otázek byl použit také Codex.</p>
+</footer>
+
+<div id="victoryOverlay" class="victory-overlay hidden" data-winner="" role="dialog" aria-modal="true" aria-labelledby="victoryTitle">
+  <div class="victory-card">
+    <div class="victory-trophy" aria-hidden="true">🏆</div>
+    <p class="victory-kicker">Konec hry</p>
+    <h2 id="victoryTitle" class="victory-title">Vítěz!</h2><br>
+    <div class="victory-actions">
+      <button id="victoryContinueButton" class="button button-secondary" type="button">Pokračovat</button>
+      <button id="victoryNewGameButton" class="button button-primary victory-new-game" type="button">Nová hra</button>
+    </div>
+  </div>
+</div>
+
+<div id="confettiLayer" class="confetti-layer" aria-hidden="true"></div>
+
+<dialog id="questionDialog" class="dialog">
+  <form method="dialog" class="dialog-shell" id="questionForm">
+    <div class="dialog-header">
+      <div>
+        <p id="questionType" class="eyebrow"></p>
+        <h2 id="questionLabel">Otázka</h2>
+      </div>
+      <button class="icon-button" value="cancel" aria-label="Zavřít dialog" title="Zavřít">×</button>
+    </div>
+
+    <div class="dialog-content">
+      <p id="questionText" class="question-text"></p>
+
+      <div id="timerBox" class="timer-box" aria-live="polite">
+        <div class="timer-top">
+          <span class="timer-label">Čas na odpověď</span>
+          <strong id="timerValue" class="timer-value">30 s</strong>
         </div>
-      </section>
-
-    </aside>
-  </main>
-
-  <footer class="app-footer">
-    <p>ondrej.chlubna@cichnovabrno.cz || K vývoji aplikace a přípravě ukázkových otázek byl použit také Codex.</p>
-  </footer>
-
-  <dialog id="questionDialog" class="dialog">
-    <form method="dialog" class="dialog-shell" id="questionForm">
-      <div class="dialog-header">
-        <div>
-          <p id="questionType" class="eyebrow"></p>
-          <h2 id="questionLabel">Otázka</h2>
-        </div>
-        <button class="icon-button" value="cancel" aria-label="Zavřít dialog" title="Zavřít">×</button>
+        <div class="timer-track" aria-hidden="true"><div id="timerProgress" class="timer-progress"></div></div>
       </div>
 
-      <div class="dialog-content">
-        <p id="questionText" class="question-text"></p>
-
-        <div id="timerBox" class="timer-box" aria-live="polite">
-          <div class="timer-top">
-            <span class="timer-label">Čas na odpověď</span>
-            <strong id="timerValue" class="timer-value">30 s</strong>
-          </div>
-          <div class="timer-track" aria-hidden="true"><div id="timerProgress" class="timer-progress"></div></div>
-        </div>
-
-        <div id="yesNoControls" class="yes-no-controls hidden" aria-label="Odpověď ano nebo ne">
-          <button class="yes-no-button" type="button" data-answer="ANO">ANO</button>
-          <button class="yes-no-button" type="button" data-answer="NE">NE</button>
-        </div>
-        <p id="yesNoResult" class="answer-result hidden" role="status"></p>
-
-        <div id="answerBox" class="answer-box hidden">
-          <span>Správná odpověď</span>
-          <strong id="answerText"></strong>
-        </div>
-
-        <button id="revealAnswerButton" class="button button-primary button-block" type="button">Zobrazit odpověď</button>
-
-        <div id="colorChooser" class="color-chooser hidden">
-          <p>Vyberte nový stav pole:</p>
-          <div class="color-grid">
-            <button type="button" class="color-button blue" data-color="blue">Modrá</button>
-            <button type="button" class="color-button orange" data-color="orange">Oranžová</button>
-            <button type="button" class="color-button white" data-color="open">Neobsazeno</button>
-            <button type="button" class="color-button black" data-color="black">Černá</button>
-          </div>
-        </div>
+      <div id="yesNoControls" class="yes-no-controls hidden" aria-label="Odpověď ano nebo ne">
+        <button class="yes-no-button" type="button" data-answer="ANO">ANO</button>
+        <button class="yes-no-button" type="button" data-answer="NE">NE</button>
       </div>
-    </form>
-  </dialog>
+      <p id="yesNoResult" class="answer-result hidden" role="status"></p>
 
-  <dialog id="importDialog" class="dialog import-dialog">
-    <form method="dialog" class="dialog-shell" id="importForm">
-      <div class="dialog-header">
-        <div>
-          <p class="eyebrow">Správa otázek</p>
-          <h2>Nahrát otázky z CSV</h2>
-        </div>
-        <button class="icon-button" value="cancel" aria-label="Zavřít dialog" title="Zavřít">×</button>
+      <div id="answerBox" class="answer-box hidden">
+        <span>Správná odpověď</span>
+        <strong id="answerText"></strong>
       </div>
 
-      <div class="dialog-content">
-        <label class="file-picker">
-          <span>Vybrat CSV soubor</span>
-          <input id="csvFileInput" type="file" accept=".csv,text/csv,text/plain">
-        </label>
+      <button id="revealAnswerButton" class="button button-primary button-block" type="button">Zobrazit odpověď</button>
 
-        <div class="separator"><span>nebo vložit obsah</span></div>
-
-        <label for="csvText" class="field-label">CSV data</label>
-        <textarea id="csvText" rows="13" spellcheck="false" placeholder="label;question;answer;yes_no_question;yes_no_answer"></textarea>
-        <p id="importMessage" class="form-message muted" role="status"></p>
-
-        <div class="dialog-actions">
-          <button id="loadSampleButton" class="button button-secondary" type="button">Vložit ukázku</button>
-          <button id="importButton" class="button button-primary" type="button">Načíst otázky</button>
+      <div id="colorChooser" class="color-chooser hidden">
+        <p>Vyberte nový stav pole:</p>
+        <div class="color-grid">
+          <button type="button" class="color-button blue" data-color="blue">Modrá</button>
+          <button type="button" class="color-button orange" data-color="orange">Oranžová</button>
+          <button type="button" class="color-button white" data-color="open">Neobsazeno</button>
+          <button type="button" class="color-button black" data-color="black">Černá</button>
         </div>
       </div>
-    </form>
-  </dialog>
+    </div>
+  </form>
+</dialog>
 
-  <template id="tileTemplate">
-    <button class="hex-tile" type="button">
+<dialog id="importDialog" class="dialog import-dialog">
+  <form method="dialog" class="dialog-shell" id="importForm">
+    <div class="dialog-header">
+      <div>
+        <p class="eyebrow">Správa otázek</p>
+        <h2>Nahrát otázky z CSV</h2>
+      </div>
+      <button class="icon-button" value="cancel" aria-label="Zavřít dialog" title="Zavřít">×</button>
+    </div>
+
+    <div class="dialog-content">
+      <label class="file-picker">
+        <span>Vybrat CSV soubor</span>
+        <input id="csvFileInput" type="file" accept=".csv,text/csv,text/plain">
+      </label>
+
+      <div class="separator"><span>nebo vložit obsah</span></div>
+
+      <label for="csvText" class="field-label">CSV data</label>
+      <textarea id="csvText" rows="13" spellcheck="false" placeholder="label;question;answer;yes_no_question;yes_no_answer"></textarea>
+      <p id="importMessage" class="form-message muted" role="status"></p>
+
+      <div class="dialog-actions">
+        <button id="loadSampleButton" class="button button-secondary" type="button">Vložit ukázku</button>
+        <button id="importButton" class="button button-primary" type="button">Načíst otázky</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<template id="tileTemplate">
+  <button class="hex-tile" type="button">
       <span class="hex-inner">
         <span class="tile-label"></span>
       </span>
-    </button>
-  </template>
+  </button>
+</template>
 
-  <script>
-(() => {
-  'use strict';
+<script>
+  (() => {
+    'use strict';
 
-  const STORAGE_KEY = 'az-kviz-state-v1';
-  const LETTERS = ['A', 'B', 'C', 'Č', 'D', 'E', 'F', 'G', 'H', 'CH', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'Ř', 'S', 'Š', 'T', 'U', 'V', 'Y', 'Z', 'Ž'];
+    const STORAGE_KEY = 'az-kviz-state-v1';
+    const LETTERS = ['A', 'B', 'C', 'Č', 'D', 'E', 'F', 'G', 'H', 'CH', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'Ř', 'S', 'Š', 'T', 'U', 'V', 'Y', 'Z', 'Ž'];
 
-  const sampleQuestions = [
-    ['A', 'Jaké je hlavní město České republiky?', 'Praha', 'Leží Praha na řece Vltavě?', 'ANO'],
-    ['B', 'Která planeta je nejblíže Slunci?', 'Merkur', 'Je Merkur větší než Země?', 'NE'],
-    ['C', 'Kolik stran má pravidelný šestiúhelník?', '6', 'Má krychle šest stěn?', 'ANO'],
-    ['Č', 'Kdo napsal drama R.U.R.?', 'Karel Čapek', 'Vymyslel Karel Čapek slovo robot?', 'NE'],
-    ['D', 'Jak se nazývá nejdelší řeka světa podle tradičního školního údaje?', 'Nil', 'Protéká Nil Egyptem?', 'ANO'],
-    ['E', 'Jaký chemický symbol má zlato?', 'Au', 'Je zlato za běžných podmínek plyn?', 'NE'],
-    ['F', 'Kolik je 12 × 8?', '96', 'Je 96 dělitelné třemi?', 'ANO'],
-    ['G', 'Který oceán je největší?', 'Tichý oceán', 'Je Atlantský oceán větší než Tichý?', 'NE'],
-    ['H', 'Jak se jmenuje nejvyšší hora Česka?', 'Sněžka', 'Měří Sněžka více než 2 000 metrů?', 'NE'],
-    ['CH', 'Který plyn rostliny přijímají při fotosyntéze?', 'Oxid uhličitý', 'Uvolňují rostliny při fotosyntéze kyslík?', 'ANO'],
-    ['I', 'Jak se nazývá největší orgán lidského těla?', 'Kůže', 'Je srdce největším orgánem lidského těla?', 'NE'],
-    ['J', 'Kolik hráčů jednoho týmu je běžně na hřišti ve fotbale?', '11', 'Hraje se fotbal standardně s kulatým míčem?', 'ANO'],
-    ['K', 'Který kontinent je rozlohou nejmenší?', 'Austrálie', 'Je Austrálie zároveň státem?', 'ANO'],
-    ['L', 'Jak se jmenuje autor románu 1984?', 'George Orwell', 'Byl George Orwell rodným jménem Eric Arthur Blair?', 'ANO'],
-    ['M', 'Kolik minut má jedna hodina?', '60', 'Má jeden den 1 440 minut?', 'ANO'],
-    ['N', 'Jaký je největší savec na Zemi?', 'Plejtvák obrovský', 'Žije plejtvák obrovský pouze ve sladké vodě?', 'NE'],
-    ['O', 'Jak se nazývá proces změny kapaliny na plyn?', 'Vypařování', 'Může se voda vypařovat i pod bodem varu?', 'ANO'],
-    ['P', 'Kdo namaloval Monu Lisu?', 'Leonardo da Vinci', 'Je Mona Lisa vystavena v Louvru?', 'ANO'],
-    ['R', 'Kolik je druhá odmocnina ze 144?', '12', 'Je 144 prvočíslo?', 'NE'],
-    ['Ř', 'Jak se nazývá česká měna?', 'Koruna česká', 'Je česká koruna rozdělena na 100 haléřů, přestože haléřové mince už neobíhají?', 'ANO'],
-    ['S', 'Který kov je za běžné pokojové teploty kapalný?', 'Rtuť', 'Je chemická značka rtuti Hg?', 'ANO'],
-    ['Š', 'Jak se jmenuje největší poušť světa, počítáme-li i polární pouště?', 'Antarktida', 'Je Sahara největší horká poušť světa?', 'ANO'],
-    ['T', 'Kolik je v běžném roce dní?', '365', 'Má každý čtvrtý kalendářní rok automaticky 366 dní?', 'NE'],
-    ['U', 'Jaký jazyk se používá pro strukturu webových stránek?', 'HTML', 'Je CSS programovací jazyk určený primárně ke stylování webu?', 'NE'],
-    ['V', 'Jak se jmenuje největší česká vodní nádrž podle rozlohy?', 'Lipno', 'Leží Lipno na Vltavě?', 'ANO'],
-    ['Y', 'Jaké číslo označuje římská číslice X?', '10', 'Označuje římská číslice L číslo 50?', 'ANO'],
-    ['Z', 'Kolik barev má tradičně duha?', '7', 'Patří černá mezi spektrální barvy duhy?', 'NE'],
-    ['Ž', 'Jak se nazývá základní jednotka elektrického proudu?', 'Ampér', 'Je volt jednotkou elektrického proudu?', 'NE']
-  ].map(([label, question, answer, yesNoQuestion, yesNoAnswer], index) => ({
-    id: index + 1,
-    label,
-    question,
-    answer,
-    yesNoQuestion,
-    yesNoAnswer,
-    status: 'open'
-  }));
+    const sampleQuestions = [
+      ['A', 'Jaké je hlavní město České republiky?', 'Praha', 'Leží Praha na řece Vltavě?', 'ANO'],
+      ['B', 'Která planeta je nejblíže Slunci?', 'Merkur', 'Je Merkur větší než Země?', 'NE'],
+      ['C', 'Kolik stran má pravidelný šestiúhelník?', '6', 'Má krychle šest stěn?', 'ANO'],
+      ['Č', 'Kdo napsal drama R.U.R.?', 'Karel Čapek', 'Vymyslel Karel Čapek slovo robot?', 'NE'],
+      ['D', 'Jak se nazývá nejdelší řeka světa podle tradičního školního údaje?', 'Nil', 'Protéká Nil Egyptem?', 'ANO'],
+      ['E', 'Jaký chemický symbol má zlato?', 'Au', 'Je zlato za běžných podmínek plyn?', 'NE'],
+      ['F', 'Kolik je 12 × 8?', '96', 'Je 96 dělitelné třemi?', 'ANO'],
+      ['G', 'Který oceán je největší?', 'Tichý oceán', 'Je Atlantský oceán větší než Tichý?', 'NE'],
+      ['H', 'Jak se jmenuje nejvyšší hora Česka?', 'Sněžka', 'Měří Sněžka více než 2 000 metrů?', 'NE'],
+      ['CH', 'Který plyn rostliny přijímají při fotosyntéze?', 'Oxid uhličitý', 'Uvolňují rostliny při fotosyntéze kyslík?', 'ANO'],
+      ['I', 'Jak se nazývá největší orgán lidského těla?', 'Kůže', 'Je srdce největším orgánem lidského těla?', 'NE'],
+      ['J', 'Kolik hráčů jednoho týmu je běžně na hřišti ve fotbale?', '11', 'Hraje se fotbal standardně s kulatým míčem?', 'ANO'],
+      ['K', 'Který kontinent je rozlohou nejmenší?', 'Austrálie', 'Je Austrálie zároveň státem?', 'ANO'],
+      ['L', 'Jak se jmenuje autor románu 1984?', 'George Orwell', 'Byl George Orwell rodným jménem Eric Arthur Blair?', 'ANO'],
+      ['M', 'Kolik minut má jedna hodina?', '60', 'Má jeden den 1 440 minut?', 'ANO'],
+      ['N', 'Jaký je největší savec na Zemi?', 'Plejtvák obrovský', 'Žije plejtvák obrovský pouze ve sladké vodě?', 'NE'],
+      ['O', 'Jak se nazývá proces změny kapaliny na plyn?', 'Vypařování', 'Může se voda vypařovat i pod bodem varu?', 'ANO'],
+      ['P', 'Kdo namaloval Monu Lisu?', 'Leonardo da Vinci', 'Je Mona Lisa vystavena v Louvru?', 'ANO'],
+      ['R', 'Kolik je druhá odmocnina ze 144?', '12', 'Je 144 prvočíslo?', 'NE'],
+      ['Ř', 'Jak se nazývá česká měna?', 'Koruna česká', 'Je česká koruna rozdělena na 100 haléřů, přestože haléřové mince už neobíhají?', 'ANO'],
+      ['S', 'Který kov je za běžné pokojové teploty kapalný?', 'Rtuť', 'Je chemická značka rtuti Hg?', 'ANO'],
+      ['Š', 'Jak se jmenuje největší poušť světa, počítáme-li i polární pouště?', 'Antarktida', 'Je Sahara největší horká poušť světa?', 'ANO'],
+      ['T', 'Kolik je v běžném roce dní?', '365', 'Má každý čtvrtý kalendářní rok automaticky 366 dní?', 'NE'],
+      ['U', 'Jaký jazyk se používá pro strukturu webových stránek?', 'HTML', 'Je CSS programovací jazyk určený primárně ke stylování webu?', 'NE'],
+      ['V', 'Jak se jmenuje největší česká vodní nádrž podle rozlohy?', 'Lipno', 'Leží Lipno na Vltavě?', 'ANO'],
+      ['Y', 'Jaké číslo označuje římská číslice X?', '10', 'Označuje římská číslice L číslo 50?', 'ANO'],
+      ['Z', 'Kolik barev má tradičně duha?', '7', 'Patří černá mezi spektrální barvy duhy?', 'NE'],
+      ['Ž', 'Jak se nazývá základní jednotka elektrického proudu?', 'Ampér', 'Je volt jednotkou elektrického proudu?', 'NE']
+    ].map(([label, question, answer, yesNoQuestion, yesNoAnswer], index) => ({
+      id: index + 1,
+      label,
+      question,
+      answer,
+      yesNoQuestion,
+      yesNoAnswer,
+      status: 'open'
+    }));
 
-  const els = {
-    board: document.querySelector('#board'),
-    boardStatus: document.querySelector('#boardStatus'),
-    tileTemplate: document.querySelector('#tileTemplate'),
-    questionDialog: document.querySelector('#questionDialog'),
-    questionType: document.querySelector('#questionType'),
-    questionLabel: document.querySelector('#questionLabel'),
-    questionText: document.querySelector('#questionText'),
-    answerBox: document.querySelector('#answerBox'),
-    answerText: document.querySelector('#answerText'),
-    revealAnswerButton: document.querySelector('#revealAnswerButton'),
-    colorChooser: document.querySelector('#colorChooser'),
-    yesNoControls: document.querySelector('#yesNoControls'),
-    yesNoResult: document.querySelector('#yesNoResult'),
-    importDialog: document.querySelector('#importDialog'),
-    openImportButton: document.querySelector('#openImportButton'),
-    csvFileInput: document.querySelector('#csvFileInput'),
-    csvText: document.querySelector('#csvText'),
-    importButton: document.querySelector('#importButton'),
-    loadSampleButton: document.querySelector('#loadSampleButton'),
-    importMessage: document.querySelector('#importMessage'),
-    resetBoardButton: document.querySelector('#resetBoardButton'),
-    undoButton: document.querySelector('#undoButton'),
-    blueCount: document.querySelector('#blueCount'),
-    orangeCount: document.querySelector('#orangeCount'),
-    blackCount: document.querySelector('#blackCount'),
-    openCount: document.querySelector('#openCount'),
-    timerBox: document.querySelector('#timerBox'),
-    timerValue: document.querySelector('#timerValue'),
-    timerProgress: document.querySelector('#timerProgress'),
-    downloadSampleButton: document.querySelector('#downloadSampleButton')
-  };
+    const els = {
+      board: document.querySelector('#board'),
+      boardStatus: document.querySelector('#boardStatus'),
+      tileTemplate: document.querySelector('#tileTemplate'),
+      questionDialog: document.querySelector('#questionDialog'),
+      questionType: document.querySelector('#questionType'),
+      questionLabel: document.querySelector('#questionLabel'),
+      questionText: document.querySelector('#questionText'),
+      answerBox: document.querySelector('#answerBox'),
+      answerText: document.querySelector('#answerText'),
+      revealAnswerButton: document.querySelector('#revealAnswerButton'),
+      colorChooser: document.querySelector('#colorChooser'),
+      yesNoControls: document.querySelector('#yesNoControls'),
+      yesNoResult: document.querySelector('#yesNoResult'),
+      importDialog: document.querySelector('#importDialog'),
+      openImportButton: document.querySelector('#openImportButton'),
+      csvFileInput: document.querySelector('#csvFileInput'),
+      csvText: document.querySelector('#csvText'),
+      importButton: document.querySelector('#importButton'),
+      loadSampleButton: document.querySelector('#loadSampleButton'),
+      importMessage: document.querySelector('#importMessage'),
+      resetBoardButton: document.querySelector('#resetBoardButton'),
+      undoButton: document.querySelector('#undoButton'),
+      blueCount: document.querySelector('#blueCount'),
+      orangeCount: document.querySelector('#orangeCount'),
+      blackCount: document.querySelector('#blackCount'),
+      openCount: document.querySelector('#openCount'),
+      timerBox: document.querySelector('#timerBox'),
+      timerValue: document.querySelector('#timerValue'),
+      timerProgress: document.querySelector('#timerProgress'),
+      downloadSampleButton: document.querySelector('#downloadSampleButton'),
+      victoryOverlay: document.querySelector('#victoryOverlay'),
+      victoryTitle: document.querySelector('#victoryTitle'),
+      victoryContinueButton: document.querySelector('#victoryContinueButton'),
+      victoryNewGameButton: document.querySelector('#victoryNewGameButton'),
+      confettiLayer: document.querySelector('#confettiLayer')
+    };
 
-  const cloneData = value => JSON.parse(JSON.stringify(value));
+    const cloneData = value => JSON.parse(JSON.stringify(value));
 
-  let questions = loadState() ?? cloneData(sampleQuestions);
-  let activeIndex = null;
-  let isBlackRound = false;
-  let selectedYesNoAnswer = null;
-  let history = [];
-  let timerInterval = null;
-  let timerRemaining = 30;
+    let questions = loadState() ?? cloneData(sampleQuestions);
+    let activeIndex = null;
+    let isBlackRound = false;
+    let selectedYesNoAnswer = null;
+    let history = [];
+    let timerInterval = null;
+    let timerRemaining = 30;
+    let victoryPath = [];
+    let declaredWinner = null;
+    let victoryTimeout = null;
 
-  function loadState() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed) || parsed.length !== 28) return null;
-      return parsed.map(question => ({
-        ...question,
-        status: ['gray', 'white'].includes(question.status) ? 'open' : question.status
-      }));
-    } catch {
-      return null;
-    }
-  }
-
-  function saveState() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(questions));
-    } catch {
-      // Některé prohlížeče blokují localStorage u souborů otevřených přes file://.
-      // Hra přesto zůstává plně funkční po dobu otevření stránky.
-    }
-  }
-
-  function pushHistory() {
-    history.push(cloneData(questions));
-    if (history.length > 30) history.shift();
-    els.undoButton.disabled = false;
-  }
-
-  function undo() {
-    const previous = history.pop();
-    if (!previous) return;
-    questions = previous;
-    els.undoButton.disabled = history.length === 0;
-    saveState();
-    renderBoard();
-  }
-
-  function renderBoard() {
-    els.board.innerHTML = '';
-    let index = 0;
-
-    for (let rowLength = 1; rowLength <= 7; rowLength += 1) {
-      const row = document.createElement('div');
-      row.className = 'board-row';
-
-      for (let column = 0; column < rowLength; column += 1) {
-        const question = questions[index];
-        const fragment = els.tileTemplate.content.cloneNode(true);
-        const button = fragment.querySelector('.hex-tile');
-        const label = fragment.querySelector('.tile-label');
-
-        const tileIndex = index;
-        button.dataset.index = String(tileIndex);
-        button.dataset.status = question.status ?? 'open';
-        button.setAttribute('aria-label', `Pole ${question.label}: ${statusLabel(question.status)}`);
-        label.textContent = question.label;
-        button.addEventListener('click', () => openQuestion(tileIndex));
-        row.appendChild(fragment);
-        index += 1;
-      }
-
-      els.board.appendChild(row);
-    }
-
-    updateStats();
-  }
-
-  function statusLabel(status) {
-    return ({ open: 'neobsazené', blue: 'modré', orange: 'oranžové', black: 'černé' })[status] ?? 'neobsazené';
-  }
-
-  function updateStats() {
-    const counts = { blue: 0, orange: 0, black: 0, open: 0 };
-    for (const q of questions) {
-      if (q.status in counts) counts[q.status] += 1;
-    }
-    els.blueCount.textContent = counts.blue;
-    els.orangeCount.textContent = counts.orange;
-    els.blackCount.textContent = counts.black;
-    els.openCount.textContent = counts.open;
-    els.boardStatus.textContent = counts.black > 0
-      ? `Ve hře je ${counts.black} černých polí připravených na otázku ANO/NE.`
-      : 'Kliknutím na pole otevřete otázku.';
-  }
-
-  function openDialog(dialog) {
-    if (typeof dialog.showModal === 'function') {
-      dialog.showModal();
-    } else {
-      dialog.setAttribute('open', '');
-      dialog.classList.add('dialog-fallback-open');
-    }
-  }
-
-  function closeDialog(dialog) {
-    if (typeof dialog.close === 'function') {
-      dialog.close();
-    } else {
-      dialog.removeAttribute('open');
-      dialog.classList.remove('dialog-fallback-open');
-      dialog.dispatchEvent(new Event('close'));
-    }
-  }
-
-  function stopTimer() {
-    if (timerInterval !== null) {
-      clearInterval(timerInterval);
-      timerInterval = null;
-    }
-  }
-
-  function updateTimerDisplay() {
-    els.timerValue.textContent = timerRemaining > 0 ? `${timerRemaining} s` : 'Čas vypršel';
-    els.timerProgress.style.width = `${Math.max(0, timerRemaining) / 30 * 100}%`;
-    els.timerBox.classList.toggle('expired', timerRemaining <= 0);
-  }
-
-  function startTimer() {
-    stopTimer();
-    timerRemaining = 30;
-    updateTimerDisplay();
-    timerInterval = window.setInterval(() => {
-      timerRemaining -= 1;
-      updateTimerDisplay();
-      if (timerRemaining <= 0) stopTimer();
-    }, 1000);
-  }
-
-  function openQuestion(index) {
-    activeIndex = index;
-    const question = questions[index];
-    isBlackRound = question.status === 'black';
-    selectedYesNoAnswer = null;
-
-    els.questionLabel.textContent = `Pole ${question.label}`;
-    els.questionType.textContent = isBlackRound ? 'Černá otázka · ANO/NE' : 'Hlavní otázka';
-    els.questionText.textContent = isBlackRound
-      ? (question.yesNoQuestion || 'Pro toto pole není v CSV vyplněna otázka ANO/NE.')
-      : question.question;
-    els.answerText.textContent = isBlackRound
-      ? (question.yesNoAnswer || 'Není uvedena')
-      : question.answer;
-
-    els.answerBox.classList.add('hidden');
-    els.colorChooser.classList.add('hidden');
-    els.yesNoResult.classList.add('hidden');
-    els.yesNoResult.classList.remove('correct', 'incorrect');
-    els.yesNoResult.textContent = '';
-
-    if (isBlackRound && question.yesNoQuestion && question.yesNoAnswer) {
-      els.yesNoControls.classList.remove('hidden');
-      els.revealAnswerButton.classList.add('hidden');
-      document.querySelectorAll('.yes-no-button').forEach(button => button.classList.remove('selected'));
-    } else {
-      els.yesNoControls.classList.add('hidden');
-      els.revealAnswerButton.classList.remove('hidden');
-      els.revealAnswerButton.textContent = isBlackRound ? 'Pokračovat k výběru barvy' : 'Zobrazit odpověď';
-    }
-
-    startTimer();
-    openDialog(els.questionDialog);
-  }
-
-  function revealAnswer() {
-    stopTimer();
-    els.answerBox.classList.remove('hidden');
-    els.colorChooser.classList.remove('hidden');
-    els.revealAnswerButton.classList.add('hidden');
-  }
-
-  function handleYesNo(answer) {
-    if (activeIndex === null) return;
-    stopTimer();
-    const question = questions[activeIndex];
-    selectedYesNoAnswer = answer;
-
-    document.querySelectorAll('.yes-no-button').forEach(button => {
-      button.classList.toggle('selected', button.dataset.answer === answer);
-    });
-
-    const correct = normalizeYesNo(question.yesNoAnswer) === answer;
-    els.yesNoResult.textContent = correct
-      ? `Správně. Odpověď je ${normalizeYesNo(question.yesNoAnswer)}.`
-      : `Nesprávně. Správná odpověď je ${normalizeYesNo(question.yesNoAnswer)}.`;
-    els.yesNoResult.classList.remove('hidden', 'correct', 'incorrect');
-    els.yesNoResult.classList.add(correct ? 'correct' : 'incorrect');
-    els.answerText.textContent = normalizeYesNo(question.yesNoAnswer);
-    els.answerBox.classList.remove('hidden');
-    els.colorChooser.classList.remove('hidden');
-  }
-
-  function setColor(color) {
-    if (activeIndex === null) return;
-    stopTimer();
-    pushHistory();
-    questions[activeIndex].status = color;
-    saveState();
-    renderBoard();
-    closeDialog(els.questionDialog);
-    activeIndex = null;
-  }
-
-  function resetBoard() {
-    if (!confirm('Opravdu chcete vrátit všechna pole do výchozího stavu? Otázky zůstanou zachovány.')) return;
-    pushHistory();
-    questions = questions.map(question => ({ ...question, status: 'open' }));
-    saveState();
-    renderBoard();
-  }
-
-  function csvEscape(value, delimiter = ';') {
-    const text = String(value ?? '');
-    return /["\n\r;,]/.test(text) || text.includes(delimiter)
-      ? `"${text.replaceAll('"', '""')}"`
-      : text;
-  }
-
-  function getSampleCsv() {
-    const header = ['label', 'question', 'answer', 'yes_no_question', 'yes_no_answer'];
-    const lines = [header.join(';')];
-    for (const q of sampleQuestions) {
-      lines.push([q.label, q.question, q.answer, q.yesNoQuestion, q.yesNoAnswer].map(value => csvEscape(value)).join(';'));
-    }
-    return lines.join('\n');
-  }
-
-  function detectDelimiter(firstLine) {
-    const candidates = [';', ',', '\t'];
-    let best = ';';
-    let bestCount = -1;
-    for (const candidate of candidates) {
-      let count = 0;
-      let inQuotes = false;
-      for (let i = 0; i < firstLine.length; i += 1) {
-        if (firstLine[i] === '"') inQuotes = !inQuotes;
-        else if (!inQuotes && firstLine[i] === candidate) count += 1;
-      }
-      if (count > bestCount) {
-        best = candidate;
-        bestCount = count;
-      }
-    }
-    return best;
-  }
-
-  function parseCsv(text) {
-    const normalized = text.replace(/^\uFEFF/, '').trim();
-    if (!normalized) throw new Error('CSV je prázdné.');
-
-    const delimiter = detectDelimiter(normalized.split(/\r?\n/, 1)[0]);
-    const rows = [];
-    let row = [];
-    let value = '';
-    let inQuotes = false;
-
-    for (let i = 0; i < normalized.length; i += 1) {
-      const char = normalized[i];
-      const next = normalized[i + 1];
-
-      if (char === '"' && inQuotes && next === '"') {
-        value += '"';
-        i += 1;
-      } else if (char === '"') {
-        inQuotes = !inQuotes;
-      } else if (char === delimiter && !inQuotes) {
-        row.push(value.trim());
-        value = '';
-      } else if ((char === '\n' || char === '\r') && !inQuotes) {
-        if (char === '\r' && next === '\n') i += 1;
-        row.push(value.trim());
-        if (row.some(cell => cell !== '')) rows.push(row);
-        row = [];
-        value = '';
-      } else {
-        value += char;
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed) || parsed.length !== 28) return null;
+        return parsed.map(question => ({
+          ...question,
+          status: ['gray', 'white'].includes(question.status) ? 'open' : question.status
+        }));
+      } catch {
+        return null;
       }
     }
 
-    if (inQuotes) throw new Error('CSV obsahuje neuzavřené uvozovky.');
-    row.push(value.trim());
-    if (row.some(cell => cell !== '')) rows.push(row);
-    if (rows.length < 2) throw new Error('CSV musí obsahovat hlavičku a alespoň jeden řádek otázky.');
-
-    return rows;
-  }
-
-  function normalizeHeader(header) {
-    return header
-      .trim()
-      .toLocaleLowerCase('cs-CZ')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9]+/g, '_')
-      .replace(/^_+|_+$/g, '');
-  }
-
-  function findColumn(headers, aliases) {
-    return headers.findIndex(header => aliases.includes(header));
-  }
-
-  function normalizeYesNo(value) {
-    const normalized = String(value ?? '')
-      .trim()
-      .toLocaleUpperCase('cs-CZ')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-    if (['ANO', 'A', 'YES', 'TRUE', '1'].includes(normalized)) return 'ANO';
-    if (['NE', 'N', 'NO', 'FALSE', '0'].includes(normalized)) return 'NE';
-    return normalized;
-  }
-
-  function rowsToQuestions(rows) {
-    const headers = rows[0].map(normalizeHeader);
-    const labelIndex = findColumn(headers, ['label', 'pismeno', 'oznaceni', 'id']);
-    const questionIndex = findColumn(headers, ['question', 'otazka', 'hlavni_otazka']);
-    const answerIndex = findColumn(headers, ['answer', 'odpoved', 'spravna_odpoved']);
-    const yesNoQuestionIndex = findColumn(headers, ['yes_no_question', 'ano_ne_otazka', 'cerna_otazka', 'black_question']);
-    const yesNoAnswerIndex = findColumn(headers, ['yes_no_answer', 'ano_ne_odpoved', 'cerna_odpoved', 'black_answer']);
-
-    if (questionIndex < 0 || answerIndex < 0) {
-      throw new Error('Chybí povinné sloupce question/otazka a answer/odpoved.');
-    }
-
-    const dataRows = rows.slice(1).filter(row => row.some(cell => String(cell).trim() !== ''));
-    if (dataRows.length !== 28) {
-      throw new Error(`AZ plocha potřebuje přesně 28 otázek. CSV nyní obsahuje ${dataRows.length}.`);
-    }
-
-    return dataRows.map((row, index) => {
-      const question = String(row[questionIndex] ?? '').trim();
-      const answer = String(row[answerIndex] ?? '').trim();
-      const yesNoQuestion = yesNoQuestionIndex >= 0 ? String(row[yesNoQuestionIndex] ?? '').trim() : '';
-      const yesNoAnswerRaw = yesNoAnswerIndex >= 0 ? String(row[yesNoAnswerIndex] ?? '').trim() : '';
-      const yesNoAnswer = normalizeYesNo(yesNoAnswerRaw);
-
-      if (!question || !answer) throw new Error(`Řádek ${index + 2}: otázka i odpověď musí být vyplněné.`);
-      if ((yesNoQuestion && !['ANO', 'NE'].includes(yesNoAnswer)) || (!yesNoQuestion && yesNoAnswerRaw)) {
-        throw new Error(`Řádek ${index + 2}: odpověď ANO/NE musí být ANO nebo NE a musí mít odpovídající otázku.`);
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(questions));
+      } catch {
+        // Některé prohlížeče blokují localStorage u souborů otevřených přes file://.
+        // Hra přesto zůstává plně funkční po dobu otevření stránky.
       }
+    }
 
-      return {
-        id: index + 1,
-        label: String(labelIndex >= 0 ? row[labelIndex] : '').trim() || LETTERS[index],
-        question,
-        answer,
-        yesNoQuestion,
-        yesNoAnswer,
-        status: 'open'
-      };
-    });
-  }
+    function pushHistory() {
+      history.push(cloneData(questions));
+      if (history.length > 30) history.shift();
+      els.undoButton.disabled = false;
+    }
 
-  function importCsv() {
-    try {
-      const rows = parseCsv(els.csvText.value);
-      const imported = rowsToQuestions(rows);
-      pushHistory();
-      questions = imported;
+    function undo() {
+      const previous = history.pop();
+      if (!previous) return;
+      clearVictoryPresentation();
+      declaredWinner = null;
+      questions = previous;
+      els.undoButton.disabled = history.length === 0;
       saveState();
       renderBoard();
-      setImportMessage('Načteno 28 otázek. Herní plocha byla obnovena.', 'success');
-      setTimeout(() => closeDialog(els.importDialog), 550);
-    } catch (error) {
-      setImportMessage(error instanceof Error ? error.message : 'CSV se nepodařilo načíst.', 'error');
     }
-  }
 
-  function setImportMessage(message, type = '') {
-    els.importMessage.textContent = message;
-    els.importMessage.className = `form-message ${type || 'muted'}`;
-  }
+    function renderBoard() {
+      els.board.innerHTML = '';
+      let index = 0;
 
-  els.openImportButton.addEventListener('click', () => {
-    setImportMessage('Aktuální hra se po úspěšném importu nahradí.');
-    openDialog(els.importDialog);
-  });
+      for (let rowLength = 1; rowLength <= 7; rowLength += 1) {
+        const row = document.createElement('div');
+        row.className = 'board-row';
 
-  function readFileAsText(file) {
-    if (typeof file.text === 'function') return file.text();
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(String(reader.result ?? ''));
-      reader.onerror = () => reject(reader.error);
-      reader.readAsText(file, 'utf-8');
-    });
-  }
+        for (let column = 0; column < rowLength; column += 1) {
+          const question = questions[index];
+          const fragment = els.tileTemplate.content.cloneNode(true);
+          const button = fragment.querySelector('.hex-tile');
+          const label = fragment.querySelector('.tile-label');
 
-  els.csvFileInput.addEventListener('change', async event => {
-    const [file] = event.target.files;
-    if (!file) return;
-    try {
-      els.csvText.value = await readFileAsText(file);
-      setImportMessage(`Soubor „${file.name}“ byl vložen. Klikněte na Načíst otázky.`, 'success');
-    } catch {
-      setImportMessage('Soubor se nepodařilo přečíst.', 'error');
+          const tileIndex = index;
+          button.dataset.index = String(tileIndex);
+          button.dataset.status = question.status ?? 'open';
+
+          const victoryOrder = victoryPath.indexOf(tileIndex);
+          if (victoryOrder >= 0) {
+            button.classList.add('winning-tile');
+            button.style.setProperty('--win-delay', `${300 + victoryOrder * 90}ms`);
+          }
+
+          button.setAttribute('aria-label', `Pole ${question.label}: ${statusLabel(question.status)}`);
+          label.textContent = question.label;
+          button.addEventListener('click', () => openQuestion(tileIndex));
+          row.appendChild(fragment);
+          index += 1;
+        }
+
+        els.board.appendChild(row);
+      }
+
+      updateStats();
     }
-  });
 
-  els.loadSampleButton.addEventListener('click', () => {
-    els.csvText.value = getSampleCsv();
-    setImportMessage('Ukázkové otázky byly vloženy do textového pole.', 'success');
-  });
+    function statusLabel(status) {
+      return ({ open: 'neobsazené', blue: 'modré', orange: 'oranžové', black: 'černé' })[status] ?? 'neobsazené';
+    }
 
-  els.downloadSampleButton?.addEventListener('click', () => {
-    const blob = new Blob(['\uFEFF', getSampleCsv()], { type: 'text/csv;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'az-kviz-otazky.csv';
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  });
+    function updateStats() {
+      const counts = { blue: 0, orange: 0, black: 0, open: 0 };
+      for (const q of questions) {
+        if (q.status in counts) counts[q.status] += 1;
+      }
+      els.blueCount.textContent = counts.blue;
+      els.orangeCount.textContent = counts.orange;
+      els.blackCount.textContent = counts.black;
+      els.openCount.textContent = counts.open;
+      els.boardStatus.textContent = counts.black > 0
+              ? `Ve hře je ${counts.black} černých polí připravených na otázku ANO/NE.`
+              : 'Kliknutím na pole otevřete otázku.';
+    }
 
-  document.querySelectorAll('.icon-button').forEach(button => {
-    button.addEventListener('click', event => {
-      event.preventDefault();
-      const dialog = button.closest('dialog');
-      if (dialog) closeDialog(dialog);
+
+    function indexFor(row, column) {
+      return row * (row + 1) / 2 + column;
+    }
+
+    function coordinatesFor(index) {
+      let row = 0;
+      while (index >= indexFor(row + 1, 0)) row += 1;
+      return { row, column: index - indexFor(row, 0) };
+    }
+
+    function getNeighborIndices(index) {
+      const { row, column } = coordinatesFor(index);
+      const candidates = [
+        [row, column - 1],
+        [row, column + 1],
+        [row - 1, column - 1],
+        [row - 1, column],
+        [row + 1, column],
+        [row + 1, column + 1]
+      ];
+
+      return candidates
+              .filter(([r, c]) => r >= 0 && r < 7 && c >= 0 && c <= r)
+              .map(([r, c]) => indexFor(r, c));
+    }
+
+    function shortestPathBetweenSets(componentSet, starts, targets) {
+      const queue = [];
+      const visited = new Set();
+      const parent = new Map();
+
+      for (const start of starts) {
+        if (!componentSet.has(start)) continue;
+        queue.push(start);
+        visited.add(start);
+        parent.set(start, null);
+        if (targets.has(start)) return [start];
+      }
+
+      while (queue.length > 0) {
+        const current = queue.shift();
+
+        for (const neighbor of getNeighborIndices(current)) {
+          if (!componentSet.has(neighbor) || visited.has(neighbor)) continue;
+
+          visited.add(neighbor);
+          parent.set(neighbor, current);
+
+          if (targets.has(neighbor)) {
+            const path = [neighbor];
+            let node = current;
+
+            while (node !== null) {
+              path.push(node);
+              node = parent.get(node) ?? null;
+            }
+
+            return path.reverse();
+          }
+
+          queue.push(neighbor);
+        }
+      }
+
+      return [];
+    }
+
+    function buildWinningPath(component) {
+      const componentSet = new Set(component);
+
+      const left = component.filter(index => {
+        const { column } = coordinatesFor(index);
+        return column === 0;
+      });
+
+      const right = component.filter(index => {
+        const { row, column } = coordinatesFor(index);
+        return column === row;
+      });
+
+      const bottom = component.filter(index => {
+        const { row } = coordinatesFor(index);
+        return row === 6;
+      });
+
+      const leftRightPath = shortestPathBetweenSets(componentSet, left, new Set(right));
+      if (leftRightPath.length === 0) return component;
+
+      const bottomToPath = shortestPathBetweenSets(componentSet, bottom, new Set(leftRightPath));
+      if (bottomToPath.length === 0) return component;
+
+      const ordered = [];
+      const seen = new Set();
+
+      for (const index of [...leftRightPath, ...bottomToPath]) {
+        if (seen.has(index)) continue;
+        seen.add(index);
+        ordered.push(index);
+      }
+
+      return ordered;
+    }
+
+    function findWinnerForColor(color) {
+      const visited = new Set();
+
+      for (let start = 0; start < questions.length; start += 1) {
+        if (visited.has(start) || questions[start].status !== color) continue;
+
+        const component = [];
+        const queue = [start];
+        visited.add(start);
+
+        let touchesLeft = false;
+        let touchesRight = false;
+        let touchesBottom = false;
+
+        while (queue.length > 0) {
+          const current = queue.shift();
+          component.push(current);
+
+          const { row, column } = coordinatesFor(current);
+          if (column === 0) touchesLeft = true;
+          if (column === row) touchesRight = true;
+          if (row === 6) touchesBottom = true;
+
+          for (const neighbor of getNeighborIndices(current)) {
+            if (visited.has(neighbor) || questions[neighbor].status !== color) continue;
+            visited.add(neighbor);
+            queue.push(neighbor);
+          }
+        }
+
+        if (touchesLeft && touchesRight && touchesBottom) {
+          return {
+            color,
+            path: buildWinningPath(component)
+          };
+        }
+      }
+
+      return null;
+    }
+
+    function checkWinner() {
+      return findWinnerForColor('blue') || findWinnerForColor('orange');
+    }
+
+    function clearVictoryPresentation({ keepPath = false } = {}) {
+      if (victoryTimeout !== null) {
+        clearTimeout(victoryTimeout);
+        victoryTimeout = null;
+      }
+
+      els.victoryOverlay.classList.add('hidden');
+      els.victoryOverlay.dataset.winner = '';
+      els.confettiLayer.innerHTML = '';
+
+      if (!keepPath) {
+        victoryPath = [];
+      }
+    }
+
+    function createConfetti(winner) {
+      els.confettiLayer.innerHTML = '';
+
+      if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+
+      const colors = winner === 'blue'
+              ? ['#1877d2', '#65b5ff', '#ffffff', '#d7ecff']
+              : ['#ef7a19', '#ffad65', '#ffffff', '#ffe1c7'];
+
+      const fragment = document.createDocumentFragment();
+
+      for (let i = 0; i < 300; i += 1) {
+        const piece = document.createElement('i');
+        piece.className = 'confetti-piece';
+
+        piece.style.setProperty('--x', `${Math.random() * 100}%`);
+        piece.style.setProperty('--w', `${6 + Math.random() * 7}px`);
+        piece.style.setProperty('--h', `${9 + Math.random() * 12}px`);
+        piece.style.setProperty('--rotation', `${Math.random() * 360}deg`);
+        piece.style.setProperty('--duration', `${2.1 + Math.random() * 1.5}s`);
+        piece.style.setProperty('--delay', `${Math.random() * 2.45}s`);
+        piece.style.setProperty('--drift', `${-120 + Math.random() * 240}px`);
+        piece.style.setProperty('--confetti-color', colors[Math.floor(Math.random() * colors.length)]);
+
+        fragment.appendChild(piece);
+      }
+
+      els.confettiLayer.appendChild(fragment);
+
+      window.setTimeout(() => {
+        els.confettiLayer.innerHTML = '';
+      }, 42000);
+    }
+
+    function showVictory(victory) {
+      declaredWinner = victory.color;
+      victoryPath = victory.path;
+
+      renderBoard();
+
+      const teamName = victory.color === 'blue' ? 'MODRÝ TÝM' : 'ORANŽOVÝ TÝM';
+      els.victoryTitle.textContent = `${teamName} VÍTĚZÍ!`;
+      els.victoryOverlay.dataset.winner = victory.color;
+      els.boardStatus.textContent = `${teamName} zvítězil propojením všech tří stran.`;
+
+      const pathAnimationTime = Math.min(1500, 700 + victory.path.length * 90);
+
+      victoryTimeout = window.setTimeout(() => {
+        createConfetti(victory.color);
+        els.victoryOverlay.classList.remove('hidden');
+        victoryTimeout = null;
+      }, pathAnimationTime);
+    }
+
+    function startNewGameFromVictory() {
+      clearVictoryPresentation();
+      declaredWinner = null;
+      history = [];
+      els.undoButton.disabled = true;
+      questions = questions.map(question => ({ ...question, status: 'open' }));
+      saveState();
+      renderBoard();
+    }
+
+    function openDialog(dialog) {
+      if (typeof dialog.showModal === 'function') {
+        dialog.showModal();
+      } else {
+        dialog.setAttribute('open', '');
+        dialog.classList.add('dialog-fallback-open');
+      }
+    }
+
+    function closeDialog(dialog) {
+      if (typeof dialog.close === 'function') {
+        dialog.close();
+      } else {
+        dialog.removeAttribute('open');
+        dialog.classList.remove('dialog-fallback-open');
+        dialog.dispatchEvent(new Event('close'));
+      }
+    }
+
+    function stopTimer() {
+      if (timerInterval !== null) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function updateTimerDisplay() {
+      els.timerValue.textContent = timerRemaining > 0 ? `${timerRemaining} s` : 'Čas vypršel';
+      els.timerProgress.style.width = `${Math.max(0, timerRemaining) / 30 * 100}%`;
+      els.timerBox.classList.toggle('expired', timerRemaining <= 0);
+    }
+
+    function startTimer() {
+      stopTimer();
+      timerRemaining = 30;
+      updateTimerDisplay();
+      timerInterval = window.setInterval(() => {
+        timerRemaining -= 1;
+        updateTimerDisplay();
+        if (timerRemaining <= 0) stopTimer();
+      }, 1000);
+    }
+
+    function openQuestion(index) {
+      activeIndex = index;
+      const question = questions[index];
+      isBlackRound = question.status === 'black';
+      selectedYesNoAnswer = null;
+
+      els.questionLabel.textContent = `Pole ${question.label}`;
+      els.questionType.textContent = isBlackRound ? 'Černá otázka · ANO/NE' : 'Hlavní otázka';
+      els.questionText.textContent = isBlackRound
+              ? (question.yesNoQuestion || 'Pro toto pole není v CSV vyplněna otázka ANO/NE.')
+              : question.question;
+      els.answerText.textContent = isBlackRound
+              ? (question.yesNoAnswer || 'Není uvedena')
+              : question.answer;
+
+      els.answerBox.classList.add('hidden');
+      els.colorChooser.classList.add('hidden');
+      els.yesNoResult.classList.add('hidden');
+      els.yesNoResult.classList.remove('correct', 'incorrect');
+      els.yesNoResult.textContent = '';
+
+      if (isBlackRound && question.yesNoQuestion && question.yesNoAnswer) {
+        els.yesNoControls.classList.remove('hidden');
+        els.revealAnswerButton.classList.add('hidden');
+        document.querySelectorAll('.yes-no-button').forEach(button => button.classList.remove('selected'));
+      } else {
+        els.yesNoControls.classList.add('hidden');
+        els.revealAnswerButton.classList.remove('hidden');
+        els.revealAnswerButton.textContent = isBlackRound ? 'Pokračovat k výběru barvy' : 'Zobrazit odpověď';
+      }
+
+      startTimer();
+      openDialog(els.questionDialog);
+    }
+
+    function revealAnswer() {
+      stopTimer();
+      els.answerBox.classList.remove('hidden');
+      els.colorChooser.classList.remove('hidden');
+      els.revealAnswerButton.classList.add('hidden');
+    }
+
+    function handleYesNo(answer) {
+      if (activeIndex === null) return;
+      stopTimer();
+      const question = questions[activeIndex];
+      selectedYesNoAnswer = answer;
+
+      document.querySelectorAll('.yes-no-button').forEach(button => {
+        button.classList.toggle('selected', button.dataset.answer === answer);
+      });
+
+      const correct = normalizeYesNo(question.yesNoAnswer) === answer;
+      els.yesNoResult.textContent = correct
+              ? `Správně. Odpověď je ${normalizeYesNo(question.yesNoAnswer)}.`
+              : `Nesprávně. Správná odpověď je ${normalizeYesNo(question.yesNoAnswer)}.`;
+      els.yesNoResult.classList.remove('hidden', 'correct', 'incorrect');
+      els.yesNoResult.classList.add(correct ? 'correct' : 'incorrect');
+      els.answerText.textContent = normalizeYesNo(question.yesNoAnswer);
+      els.answerBox.classList.remove('hidden');
+      els.colorChooser.classList.remove('hidden');
+    }
+
+    function setColor(color) {
+      if (activeIndex === null) return;
+
+      stopTimer();
+      pushHistory();
+      clearVictoryPresentation();
+      declaredWinner = null;
+
+      questions[activeIndex].status = color;
+      saveState();
+      renderBoard();
+
+      const victory = checkWinner();
+
+      closeDialog(els.questionDialog);
+      activeIndex = null;
+
+      if (victory) {
+        showVictory(victory);
+      }
+    }
+
+    function resetBoard() {
+      if (!confirm('Opravdu chcete vrátit všechna pole do výchozího stavu? Otázky zůstanou zachovány.')) return;
+      pushHistory();
+      clearVictoryPresentation();
+      declaredWinner = null;
+      questions = questions.map(question => ({ ...question, status: 'open' }));
+      saveState();
+      renderBoard();
+    }
+
+    function csvEscape(value, delimiter = ';') {
+      const text = String(value ?? '');
+      return /["\n\r;,]/.test(text) || text.includes(delimiter)
+              ? `"${text.replaceAll('"', '""')}"`
+              : text;
+    }
+
+    function getSampleCsv() {
+      const header = ['label', 'question', 'answer', 'yes_no_question', 'yes_no_answer'];
+      const lines = [header.join(';')];
+      for (const q of sampleQuestions) {
+        lines.push([q.label, q.question, q.answer, q.yesNoQuestion, q.yesNoAnswer].map(value => csvEscape(value)).join(';'));
+      }
+      return lines.join('\n');
+    }
+
+    function detectDelimiter(firstLine) {
+      const candidates = [';', ',', '\t'];
+      let best = ';';
+      let bestCount = -1;
+      for (const candidate of candidates) {
+        let count = 0;
+        let inQuotes = false;
+        for (let i = 0; i < firstLine.length; i += 1) {
+          if (firstLine[i] === '"') inQuotes = !inQuotes;
+          else if (!inQuotes && firstLine[i] === candidate) count += 1;
+        }
+        if (count > bestCount) {
+          best = candidate;
+          bestCount = count;
+        }
+      }
+      return best;
+    }
+
+    function parseCsv(text) {
+      const normalized = text.replace(/^\uFEFF/, '').trim();
+      if (!normalized) throw new Error('CSV je prázdné.');
+
+      const delimiter = detectDelimiter(normalized.split(/\r?\n/, 1)[0]);
+      const rows = [];
+      let row = [];
+      let value = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < normalized.length; i += 1) {
+        const char = normalized[i];
+        const next = normalized[i + 1];
+
+        if (char === '"' && inQuotes && next === '"') {
+          value += '"';
+          i += 1;
+        } else if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === delimiter && !inQuotes) {
+          row.push(value.trim());
+          value = '';
+        } else if ((char === '\n' || char === '\r') && !inQuotes) {
+          if (char === '\r' && next === '\n') i += 1;
+          row.push(value.trim());
+          if (row.some(cell => cell !== '')) rows.push(row);
+          row = [];
+          value = '';
+        } else {
+          value += char;
+        }
+      }
+
+      if (inQuotes) throw new Error('CSV obsahuje neuzavřené uvozovky.');
+      row.push(value.trim());
+      if (row.some(cell => cell !== '')) rows.push(row);
+      if (rows.length < 2) throw new Error('CSV musí obsahovat hlavičku a alespoň jeden řádek otázky.');
+
+      return rows;
+    }
+
+    function normalizeHeader(header) {
+      return header
+              .trim()
+              .toLocaleLowerCase('cs-CZ')
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .replace(/[^a-z0-9]+/g, '_')
+              .replace(/^_+|_+$/g, '');
+    }
+
+    function findColumn(headers, aliases) {
+      return headers.findIndex(header => aliases.includes(header));
+    }
+
+    function normalizeYesNo(value) {
+      const normalized = String(value ?? '')
+              .trim()
+              .toLocaleUpperCase('cs-CZ')
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '');
+      if (['ANO', 'A', 'YES', 'TRUE', '1'].includes(normalized)) return 'ANO';
+      if (['NE', 'N', 'NO', 'FALSE', '0'].includes(normalized)) return 'NE';
+      return normalized;
+    }
+
+    function rowsToQuestions(rows) {
+      const headers = rows[0].map(normalizeHeader);
+      const labelIndex = findColumn(headers, ['label', 'pismeno', 'oznaceni', 'id']);
+      const questionIndex = findColumn(headers, ['question', 'otazka', 'hlavni_otazka']);
+      const answerIndex = findColumn(headers, ['answer', 'odpoved', 'spravna_odpoved']);
+      const yesNoQuestionIndex = findColumn(headers, ['yes_no_question', 'ano_ne_otazka', 'cerna_otazka', 'black_question']);
+      const yesNoAnswerIndex = findColumn(headers, ['yes_no_answer', 'ano_ne_odpoved', 'cerna_odpoved', 'black_answer']);
+
+      if (questionIndex < 0 || answerIndex < 0) {
+        throw new Error('Chybí povinné sloupce question/otazka a answer/odpoved.');
+      }
+
+      const dataRows = rows.slice(1).filter(row => row.some(cell => String(cell).trim() !== ''));
+      if (dataRows.length !== 28) {
+        throw new Error(`AZ plocha potřebuje přesně 28 otázek. CSV nyní obsahuje ${dataRows.length}.`);
+      }
+
+      return dataRows.map((row, index) => {
+        const question = String(row[questionIndex] ?? '').trim();
+        const answer = String(row[answerIndex] ?? '').trim();
+        const yesNoQuestion = yesNoQuestionIndex >= 0 ? String(row[yesNoQuestionIndex] ?? '').trim() : '';
+        const yesNoAnswerRaw = yesNoAnswerIndex >= 0 ? String(row[yesNoAnswerIndex] ?? '').trim() : '';
+        const yesNoAnswer = normalizeYesNo(yesNoAnswerRaw);
+
+        if (!question || !answer) throw new Error(`Řádek ${index + 2}: otázka i odpověď musí být vyplněné.`);
+        if ((yesNoQuestion && !['ANO', 'NE'].includes(yesNoAnswer)) || (!yesNoQuestion && yesNoAnswerRaw)) {
+          throw new Error(`Řádek ${index + 2}: odpověď ANO/NE musí být ANO nebo NE a musí mít odpovídající otázku.`);
+        }
+
+        return {
+          id: index + 1,
+          label: String(labelIndex >= 0 ? row[labelIndex] : '').trim() || LETTERS[index],
+          question,
+          answer,
+          yesNoQuestion,
+          yesNoAnswer,
+          status: 'open'
+        };
+      });
+    }
+
+    function importCsv() {
+      try {
+        const rows = parseCsv(els.csvText.value);
+        const imported = rowsToQuestions(rows);
+        pushHistory();
+        clearVictoryPresentation();
+        declaredWinner = null;
+        questions = imported;
+        saveState();
+        renderBoard();
+        setImportMessage('Načteno 28 otázek. Herní plocha byla obnovena.', 'success');
+        setTimeout(() => closeDialog(els.importDialog), 550);
+      } catch (error) {
+        setImportMessage(error instanceof Error ? error.message : 'CSV se nepodařilo načíst.', 'error');
+      }
+    }
+
+    function setImportMessage(message, type = '') {
+      els.importMessage.textContent = message;
+      els.importMessage.className = `form-message ${type || 'muted'}`;
+    }
+
+    els.openImportButton.addEventListener('click', () => {
+      setImportMessage('Aktuální hra se po úspěšném importu nahradí.');
+      openDialog(els.importDialog);
     });
-  });
 
-  els.importButton.addEventListener('click', importCsv);
-  els.revealAnswerButton.addEventListener('click', revealAnswer);
-  els.resetBoardButton.addEventListener('click', resetBoard);
-  els.undoButton.addEventListener('click', undo);
+    function readFileAsText(file) {
+      if (typeof file.text === 'function') return file.text();
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result ?? ''));
+        reader.onerror = () => reject(reader.error);
+        reader.readAsText(file, 'utf-8');
+      });
+    }
 
-  document.querySelectorAll('.yes-no-button').forEach(button => {
-    button.addEventListener('click', () => handleYesNo(button.dataset.answer));
-  });
+    els.csvFileInput.addEventListener('change', async event => {
+      const [file] = event.target.files;
+      if (!file) return;
+      try {
+        els.csvText.value = await readFileAsText(file);
+        setImportMessage(`Soubor „${file.name}“ byl vložen. Klikněte na Načíst otázky.`, 'success');
+      } catch {
+        setImportMessage('Soubor se nepodařilo přečíst.', 'error');
+      }
+    });
 
-  document.querySelectorAll('.color-button').forEach(button => {
-    button.addEventListener('click', () => setColor(button.dataset.color));
-  });
+    els.loadSampleButton.addEventListener('click', () => {
+      els.csvText.value = getSampleCsv();
+      setImportMessage('Ukázkové otázky byly vloženy do textového pole.', 'success');
+    });
 
-  els.questionDialog.addEventListener('close', () => {
-    stopTimer();
-    activeIndex = null;
-    selectedYesNoAnswer = null;
-  });
+    els.downloadSampleButton?.addEventListener('click', () => {
+      const blob = new Blob(['\uFEFF', getSampleCsv()], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'az-kviz-otazky.csv';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
 
-  renderBoard();
-})();
+    document.querySelectorAll('.icon-button').forEach(button => {
+      button.addEventListener('click', event => {
+        event.preventDefault();
+        const dialog = button.closest('dialog');
+        if (dialog) closeDialog(dialog);
+      });
+    });
+
+    els.importButton.addEventListener('click', importCsv);
+    els.revealAnswerButton.addEventListener('click', revealAnswer);
+    els.resetBoardButton.addEventListener('click', resetBoard);
+    els.undoButton.addEventListener('click', undo);
+
+    els.victoryContinueButton.addEventListener('click', () => {
+      clearVictoryPresentation({ keepPath: true });
+    });
+
+    els.victoryNewGameButton.addEventListener('click', startNewGameFromVictory);
+
+    document.querySelectorAll('.yes-no-button').forEach(button => {
+      button.addEventListener('click', () => handleYesNo(button.dataset.answer));
+    });
+
+    document.querySelectorAll('.color-button').forEach(button => {
+      button.addEventListener('click', () => setColor(button.dataset.color));
+    });
+
+    els.questionDialog.addEventListener('close', () => {
+      stopTimer();
+      activeIndex = null;
+      selectedYesNoAnswer = null;
+    });
+
+    const savedVictory = checkWinner();
+    if (savedVictory) {
+      declaredWinner = savedVictory.color;
+      victoryPath = savedVictory.path;
+    }
+
+    renderBoard();
+
+    if (savedVictory) {
+      const teamName = savedVictory.color === 'blue' ? 'MODRÝ TÝM' : 'ORANŽOVÝ TÝM';
+      els.boardStatus.textContent = `${teamName} už má vítězné propojení všech tří stran.`;
+    }
+  })();
 
 </script>
 </body>

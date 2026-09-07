@@ -1,0 +1,159 @@
+/* --- Výhra --- */
+
+    .hex-tile.winning-tile {
+      position: relative;
+      z-index: 2;
+      animation: winningTileReveal .58s cubic-bezier(.2,.8,.2,1) var(--win-delay, 0ms) both;
+    }
+
+    .hex-tile.winning-tile .hex-inner {
+      filter: brightness(1.16) saturate(1.15);
+    }
+
+    @keyframes winningTileReveal {
+      0% {
+        transform: scale(.82);
+        filter: drop-shadow(0 0 0 rgba(255,255,255,0));
+      }
+      60% {
+        transform: scale(1.09);
+        filter: drop-shadow(0 0 16px rgba(255,255,255,.95));
+      }
+      100% {
+        transform: scale(1.04);
+        filter: drop-shadow(0 0 10px rgba(255,255,255,.72));
+      }
+    }
+
+    .victory-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1100;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(1, 6, 13, .78);
+      backdrop-filter: blur(10px);
+    }
+
+    .victory-overlay.hidden {
+      display: none;
+    }
+
+    .victory-card {
+      width: min(520px, calc(100vw - 2rem));
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 1.35rem;
+      background: linear-gradient(145deg, rgba(23,36,58,.98), rgba(8,18,32,.98));
+      box-shadow: 0 32px 100px rgba(0,0,0,.62);
+      text-align: center;
+      animation: victoryCardIn .42s cubic-bezier(.18,.9,.3,1.2) both;
+    }
+
+    .victory-trophy {
+      margin-bottom: .65rem;
+      font-size: 4rem;
+      line-height: 1;
+      animation: trophyBounce .9s ease-in-out infinite alternate;
+    }
+
+    .victory-kicker {
+      margin-bottom: .35rem;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 850;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .victory-title {
+      margin: 0;
+      font-size: clamp(2rem, 7vw, 3.35rem);
+      line-height: 1;
+      letter-spacing: -.045em;
+    }
+
+    .victory-overlay[data-winner="blue"] .victory-title {
+      color: #65b5ff;
+    }
+
+    .victory-overlay[data-winner="orange"] .victory-title {
+      color: #ffad65;
+    }
+
+    .victory-subtitle {
+      margin: .9rem 0 1.4rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .victory-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .7rem;
+    }
+
+    .victory-overlay[data-winner="orange"] .victory-new-game {
+      background: var(--orange);
+    }
+
+    @keyframes victoryCardIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(.94);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes trophyBounce {
+      from { transform: translateY(0) rotate(-3deg); }
+      to   { transform: translateY(-7px) rotate(3deg); }
+    }
+
+    .confetti-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      top: -24px;
+      left: var(--x);
+      width: var(--w);
+      height: var(--h);
+      border-radius: 2px;
+      background: var(--confetti-color);
+      opacity: .95;
+      transform: rotate(var(--rotation));
+      animation: confettiFall var(--duration) cubic-bezier(.2,.65,.35,1) var(--delay) forwards;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translate3d(0, -30px, 0) rotate(var(--rotation));
+      }
+      100% {
+        transform: translate3d(var(--drift), 110vh, 0) rotate(calc(var(--rotation) + 720deg));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hex-tile.winning-tile,
+      .victory-card,
+      .victory-trophy,
+      .confetti-piece {
+        animation: none !important;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .victory-card { padding: 1.4rem; }
+      .victory-actions { grid-template-columns: 1fr; }
+    }
